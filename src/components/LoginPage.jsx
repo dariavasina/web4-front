@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import AuthenticationService from '../services/AuthenticationService';
+import {logInUser} from '../services/AuthenticationService';
         
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"
@@ -23,22 +25,40 @@ const LoginPage = () => {
     });
   };
 
-  const performLogin = async () => {
-    // Implement your authentication logic here.
-    // Example: Check credentials and perform login
-    // Replace this with your actual authentication mechanism
-    if (userData.username === 'example' && userData.password === 'password') {
-      // If login successful, redirect to home page
+  // const performLogin = async () => {
+  //   // Implement your authentication logic here.
+  //   // Example: Check credentials and perform login
+  //   // Replace this with your actual authentication mechanism
+  //   if (userData.username === 'example' && userData.password === 'password') {
+  //     // If login successful, redirect to home page
+  //     navigate('/home');
+  //   } else {
+  //     // Handle login failure
+  //     alert('Invalid username or password');
+  //   }
+  // };  
+
+  
+  const onSubmit = async (data) => {
+    AuthenticationService.logInUser(data).then(res => {
+      console.log('just logged in user');
+      const username = data.username;
+      console.log(username);
+      console.log(res)
+      // console.log(res.data)
+      // const token = res.data;
+
+      // console.log(token);
+      //dispatch(addToken(token));
+      localStorage.setItem('username', username);
       navigate('/home');
-    } else {
-      // Handle login failure
-      alert('Invalid username or password');
-    }
-  };   
+    })
+  };
+  
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    performLogin();
+    onSubmit(userData);
   };
 
   return (

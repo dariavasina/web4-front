@@ -12,6 +12,7 @@ import ChoosePage from './components/ChoosePage';
 import { useState,useEffect } from 'react';
 import EntryService from './services/EntryService';
 import DataTable from './components/DataTable';
+import PrivateRoute from './PrivateRoute.jsx';
 
 
 function App() {
@@ -20,10 +21,13 @@ function App() {
       <div>
       <HeaderComponent />
         <Routes>
-            <Route path="/home" element={<HomePage />} />
+            {/* <Route path="/home" element={<HomePage />} /> */}
             <Route path="/" element={<ChoosePage />} />
             <Route path="/signUp" element={<SignUpPage />} />
             <Route path="/logIn" element={<LoginPage />} />
+            <Route element={<PrivateRoute/>}>
+                <Route path="/home" element={<HomePage />} />
+            </Route>
 
           </Routes>
         </div>

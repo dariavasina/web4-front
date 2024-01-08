@@ -8,26 +8,20 @@ import {useDispatch} from "react-redux";
 export default function DataTable() {
     const dispatch = useDispatch();
 
-    //const [stateEntries, setStateEntries] = useState([]);
-    
-    // componentDidMount() {
-    //     EntryService.getEntries().then((res) => {
-    //         console.log("res: ");
-    //         console.log(res);
-    //         this.setState( {entries : res.data} );
-    //     });
-    // }
-
     const {valuesArray} = useSelector(state => state.entry);
+    const username = localStorage.getItem('username');
 
     useEffect( () => {
-        EntryService.getEntries().then((res) => {
-            console.log("res: ");
-            console.log(res.data);
-            dispatch(setValues(res.data));
-        });
+        if (username) {
+            EntryService.getEntriesByUsername(username).then((res) => {
+                console.log("res: ");
+                console.log(res.data);
+                dispatch(setValues(res.data));
+            });
+        }
+       
 
-    }, []);
+    }, [username]);
 
     useEffect( () => {
         console.log("valuesArray in DataTable:", valuesArray);
@@ -35,7 +29,6 @@ export default function DataTable() {
 
     return (
         <div>
-            {valuesArray && valuesArray.length > 0 ? (
             <div className='row'>
                 <table className='table table-striped table-bordered'>
                         <thead>
@@ -79,10 +72,6 @@ export default function DataTable() {
                 </table>
 
             </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-
         </div>
     );
 }

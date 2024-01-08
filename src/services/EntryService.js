@@ -7,8 +7,12 @@ class EntryService {
         return axios.get(ENTRY_API_BASE_URL);
     }
 
-     createEntry(entry) {
-        return axios.post(ENTRY_API_BASE_URL, entry);
+    getEntriesByUsername(username) {    
+        return axios.get(`${ENTRY_API_BASE_URL}/${username}`);
+    }
+
+     createEntry(entry, username) {
+        return axios.post(`${ENTRY_API_BASE_URL}/${username}`, entry);
      }
 
     clearAllEntries() {

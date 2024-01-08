@@ -52,6 +52,7 @@ const CreateEntryForm = () => {
     //     EntryService.createEntry()
     // };
 
+
     
     const handleChange = (e) => {
         const name = e.target.id;
@@ -81,23 +82,20 @@ const CreateEntryForm = () => {
         console.log("hehe")
         e.preventDefault();
 
-        EntryService.createEntry(formData).then(res => {
+        const username = localStorage.getItem('username');
+
+        EntryService.createEntry(formData, username).then(res => {
             console.log("entry created");
 
             const hit = res.data.hit;
             const updatedFormData = {
                 ...formData,
-                hit: hit,
+                hit: hit
             };
             dispatch(addValue(updatedFormData));
-            //dispatch(addValue(formData));
-            //updateEntries();
         });
 
-        // console.log(data);
-        // dispatch(sendTry(data)).then(() => {
-        //     dispatch(getTry());
-        // });
+    
     };
 
     

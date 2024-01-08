@@ -13,6 +13,7 @@ const ChartComponent = () => {
   const canvasRef = useRef(null);
   const R = 100; // Change R value as needed
   const dispatch = useDispatch();
+  const username = localStorage.getItem('username');
 
   const [formData, setFormData] = useState({
     x: '',
@@ -27,7 +28,7 @@ const ChartComponent = () => {
   const [canvasClicked, setCanvasClicked] = useState(false);
 
   let {valuesArray} = useSelector(state => state.entry);
-  console.log(valuesArray);
+  //console.log(valuesArray);
 
   //   EntryService.createEntry(newFormData).then(res => {
   //     console.log("entry created");
@@ -59,7 +60,7 @@ const ChartComponent = () => {
     let chartColor = "#87CEEB"
     let inChartColor = "#7188B1"
 
-    console.log(valuesArray);
+    //console.log(valuesArray);
 
     canvas.addEventListener('click', handleClick);
 
@@ -103,7 +104,8 @@ const ChartComponent = () => {
   }
 
     function drawAllPoints(context, canvas) {
-      EntryService.getEntries().then((res) => {
+      // EntryService.getEntries().then((res) => {
+      EntryService.getEntriesByUsername(username).then((res) => {
         entries = res.data;
         for (let i = 0; i < entries.length; i++) {
           const currentData = entries[i];
@@ -240,18 +242,33 @@ const ChartComponent = () => {
       r: 4,
     }
 
-    EntryService.createEntry(newFormData).then(res => {
+    // EntryService.createEntry(newFormData).then(res => {
+    //   //console.log("entry created");
+    //   //console.log("newFormData: ", newFormData)
+
+    //   const hit = res.data.hit;
+    //   const updatedFormData = {
+    //     ...newFormData,
+    //     hit: hit,
+    //   };
+    //   dispatch(addValue(updatedFormData));
+      
+    // });
+
+    EntryService.createEntry(newFormData, username).then(res => {
       console.log("entry created");
-      console.log("newFormData: ", newFormData)
 
       const hit = res.data.hit;
       const updatedFormData = {
-        ...newFormData,
-        hit: hit,
+          ...formData,
+          hit: hit
       };
-      dispatch(addValue(updatedFormData));
-      
-    });
+
+      console.log(updatedFormData);
+      //dispatch(addValue(updatedFormData));
+      console.log(res.data);
+      dispatch(addValue(res.data));
+  });
 
   }
 

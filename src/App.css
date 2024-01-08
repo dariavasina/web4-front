@@ -11,9 +11,6 @@
   .container {
     padding: 10px;
     display: flex;
-    /* justify-content: center; /* Center the content horizontally */
-    /* align-items: center; Center the content vertically */
-    /* flex-wrap: wrap; Allow items to wrap */
   }
   
   canvas {
@@ -94,6 +91,9 @@
   
   .table {
     padding: 50px;
+    margin: 0 auto;
+    width: 80%;
+    box-sizing: border-box;
   }
   
   .input-group label {
@@ -106,5 +106,81 @@
     margin-left: 200px;
   }
 
+  .login-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100vh;
+    padding: 20px;
+  }
+
+  .choose-page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+}
+
+@media (max-width: 704px) {
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  canvas {
+    width: 100%;
+    padding: 10px 10px;
+    display: block;
+  }
+  
+  .entry-container {
+    display: flex;
+    padding: 30px;
+    flex-direction: column;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    padding: 50px;
+    margin: 0 auto;
+    width: 80%;
+    box-sizing: border-box;
+  }
+  
+  .input-group label {
+    width: 100%;
+    display: block; 
+    margin-bottom: 20px; 
+  }
+  
+  button[type="submit"] {
+    margin-left: 200px;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100vh;
+    padding: 20px;
+  }
+
+  .choose-page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
 }
 

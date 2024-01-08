@@ -17,6 +17,8 @@ const SignUpPage = () => {
       password: '',
     });
 
+    const dispatch = useDispatch();
+
     const handleInputChange = (e) => {
       const { name, value } = e.target;
       setUserData({
@@ -35,10 +37,17 @@ const SignUpPage = () => {
     };  
   
 
-    // async?
     const onSubmit = async (data) => {
       AuthenticationService.createUser(data).then(res => {
-        console.log('lalalalal');
+        console.log('new user here');
+        const username = data.username;
+        console.log(username);
+        // console.log(res.data)
+        // const token = res.data;
+
+        // console.log(token);
+        //dispatch(addToken(token));
+        localStorage.setItem('username', username);
       })
     };
     
@@ -49,7 +58,6 @@ const SignUpPage = () => {
 
   return (
     <div className='login-container'>
-      {/* <h2>Login</h2> */}
       <form onSubmit={handleSubmit}>
         <div> 
           <div className='input-group'>
