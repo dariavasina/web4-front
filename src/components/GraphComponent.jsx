@@ -9,9 +9,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"
 import "primereact/resources/primereact.min.css"
 import "primeicons/primeicons.css"
 
-const ChartComponent = () => {
+const ChartComponent = ({ r }) => {
   const canvasRef = useRef(null);
-  const R = 100; // Change R value as needed
+  const R = 100; 
   const dispatch = useDispatch();
   const username = localStorage.getItem('username');
 
@@ -21,6 +21,8 @@ const ChartComponent = () => {
     r: '',
   });
 
+  console.log("changed r: ", r);
+
   const [stateEntries, setStateEntries] = useState([]);
 
   let entries = [];
@@ -28,27 +30,6 @@ const ChartComponent = () => {
   const [canvasClicked, setCanvasClicked] = useState(false);
 
   let {valuesArray} = useSelector(state => state.entry);
-  //console.log(valuesArray);
-
-  //   EntryService.createEntry(newFormData).then(res => {
-  //     console.log("entry created");
-  //     console.log("newFormData: ", newFormData)
-  //     dispatch(addValue(newFormData));
-      
-  //   });
-
-  // //}
-  
-
-  // const clear = async () => {
-  //   EntryService.clearAllEntries().then(() => {
-  //     const canvas = canvasRef.current;
-  //     const context = canvas.getContext('2d');
-  //     context.clearRect(0, 0, canvas.width, canvas.height);
-  //     drawChart(context, canvas.width, canvas.height, R, chartColor);
-  //   });
-  // };
-
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -60,13 +41,9 @@ const ChartComponent = () => {
     let chartColor = "#87CEEB"
     let inChartColor = "#7188B1"
 
-    //console.log(valuesArray);
-
     canvas.addEventListener('click', handleClick);
 
     drawAllPoints(context, canvas);
-
-    let r = 4;
 
     function drawPoint(x, y, xt, yt, ctx) {
       xt = Number.parseFloat(xt);
@@ -102,9 +79,8 @@ const ChartComponent = () => {
     return (x <= 0 && y <= 0 && x * x + y * y <= r * r) || (x <= 0 && y >= 0 && x >= -r && y <= r)||(x >= 0 && y >= 0 && y <= (-2) * x + r);
 
   }
-
     function drawAllPoints(context, canvas) {
-      // EntryService.getEntries().then((res) => {
+      console.log("draw entries");
       EntryService.getEntriesByUsername(username).then((res) => {
         entries = res.data;
         for (let i = 0; i < entries.length; i++) {
@@ -112,12 +88,23 @@ const ChartComponent = () => {
           const x = parseFloat(currentData.x);
           const y = parseFloat(currentData.y);
           const r1 = parseFloat(currentData.r);
-          drawPoint(
-              x * 40 + 250,
-              (-y * 40 + 250),
-              x,
-              y, context, canvas
-          );
+          if(r == r1){
+              if(window.innerWidth<550){
+                  drawPoint(
+                      x * 14 + 110,
+                      (-y * 14 + 110),
+                      x,
+                      y, context, canvas
+                  );
+              }else{
+                  drawPoint(
+                      x * 40 + 250,
+                      (-y * 40 + 250),
+                      x,
+                      y, context, canvas
+                  );
+              }
+          }
         }
 
         setStateEntries(res.data);
@@ -227,7 +214,8 @@ const ChartComponent = () => {
     
 
 
-  }, [valuesArray]);
+  }, [r, valuesArray]);
+
 
   const handleClick = async (event) => {
     console.log("clicked");
@@ -239,21 +227,8 @@ const ChartComponent = () => {
     const newFormData = {
       x: mouseX,
       y: mouseY,
-      r: 4,
+      r: r,
     }
-
-    // EntryService.createEntry(newFormData).then(res => {
-    //   //console.log("entry created");
-    //   //console.log("newFormData: ", newFormData)
-
-    //   const hit = res.data.hit;
-    //   const updatedFormData = {
-    //     ...newFormData,
-    //     hit: hit,
-    //   };
-    //   dispatch(addValue(updatedFormData));
-      
-    // });
 
     EntryService.createEntry(newFormData, username).then(res => {
       console.log("entry created");
@@ -263,10 +238,6 @@ const ChartComponent = () => {
           ...formData,
           hit: hit
       };
-
-      console.log(updatedFormData);
-      //dispatch(addValue(updatedFormData));
-      console.log(res.data);
       dispatch(addValue(res.data));
   });
 

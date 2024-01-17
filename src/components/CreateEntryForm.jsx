@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {setXCoordinateAction, setYCoordinateAction, setRadiusAction, setValidAction, doNothingAction} from '../actions'; // Import your action
 import { Button } from 'primereact/button';
+
+import { Messages } from 'primereact/messages';
+        
 import {connect} from 'react-redux'
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"
@@ -9,6 +12,7 @@ import "primereact/resources/primereact.min.css"
 import "primeicons/primeicons.css"
 import EntryService from '../services/EntryService';
 import { addValue } from '../slices/EntrySlice';
+import ChartComponent from './GraphComponent';
 
 const CreateEntryForm = () => {
     const [selectedItemX, setSelectedItemX] = useState();
@@ -21,38 +25,6 @@ const CreateEntryForm = () => {
         r: '0'
     });
     const dispatch = useDispatch();
-    
-
-    // const handleXCoordinate = (value) => {
-    //     const validCoordinates = ['-4', '-3', '-2', '-1', '0', '1', '2', '3', '4'];
-    //     if (!isNaN(value)) {
-    //       setXCoordinate(value);
-    //       setIsValid(true);
-    //     } else {
-    //       setIsValid(false);
-    //     }
-    //   };
-    
-    //   const handleRadius = (value) => {
-    //     if (!isNaN(value) && parseInt(value) >= 0) {
-    //       setRadius(value);
-    //       setIsValid(true);
-    //     } else {
-    //       setIsValid(false);
-    //     }
-    //   };
-
-    // const handleSubmit = (e) => {
-    //     console.log("hehe")
-    //     e.preventDefault();
-    //     dispatch(doNothingAction)
-
-    //     let data = {"x": }
-
-    //     EntryService.createEntry()
-    // };
-
-
     
     const handleChange = (e) => {
         const name = e.target.id;
@@ -69,7 +41,12 @@ const CreateEntryForm = () => {
         }
         if (name === "r") {
             console.log("R")
-            setSelectedItemR(e.target.value);
+            if (e.target.value < 0) {
+                alert("R can't be less than 0")
+            } else {
+                setSelectedItemR(e.target.value);
+            }
+            
         }
 
         if (name === "y") {
@@ -79,21 +56,26 @@ const CreateEntryForm = () => {
     };
 
     const handleSubmit = (e) => {
-        console.log("hehe")
         e.preventDefault();
 
-        const username = localStorage.getItem('username');
+        if (!formData.x || !formData.y || !formData.r) {
+            alert("Please choose X, Y and R");
+        } else {
+            const username = localStorage.getItem('username');
 
-        EntryService.createEntry(formData, username).then(res => {
-            console.log("entry created");
+            EntryService.createEntry(formData, username).then(res => {
+                console.log("entry created");
 
-            const hit = res.data.hit;
-            const updatedFormData = {
-                ...formData,
-                hit: hit
-            };
-            dispatch(addValue(updatedFormData));
-        });
+                const hit = res.data.hit;
+                const updatedFormData = {
+                    ...formData,
+                    hit: hit
+                };
+                dispatch(addValue(updatedFormData));
+            });
+        }
+
+        
 
     
     };
@@ -101,7 +83,9 @@ const CreateEntryForm = () => {
     
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className='container'>
+            <ChartComponent r={formData.r} />
+            <form onSubmit={handleSubmit}>
             <div className="entry-container">
                 <div className="input-group">
                     <label>
@@ -149,6 +133,8 @@ const CreateEntryForm = () => {
             </div>
             <Button type="submit" label="Check"/>
         </form>
+        </div>
+        
     );
 };
 

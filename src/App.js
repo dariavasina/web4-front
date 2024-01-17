@@ -1,10 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import ListEntryComponent from './components/ListEntryComponent';
 import HeaderComponent from './components/HeaderComponent';
 import ChartComponent from './components/GraphComponent';
-// import CreateEntryComponent from './components/CreateEntryComponent';
+
 import CreateEntryForm from './components/CreateEntryForm';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
@@ -36,32 +35,14 @@ function App() {
 }
 
 function HomePage() {
-//   //new 
-//   const [entries, setEntries] = useState([]);
-
-//   useEffect(() => {
-//     // Fetch entries data and update state
-//     EntryService.getEntries()
-//       .then((res) => {
-//         setEntries(res.data);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching entries:', error);
-//       });
-//   }, []); // Empty dependency array ensures this effect runs only once on mount
-//   // end new
-
   return (
     <div>
       <div className="container">
-        <ChartComponent />
+        {/* <ChartComponent /> */}
         <CreateEntryForm />
       </div>
       <div className='table'>
           <DataTable />
-          {/* <ListEntryComponent /> */}
-        
-          {/* <ListEntryComponent entries={entries} /> */}
       </div>
     </div>
   );

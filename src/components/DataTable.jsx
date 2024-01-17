@@ -14,8 +14,6 @@ export default function DataTable() {
     useEffect( () => {
         if (username) {
             EntryService.getEntriesByUsername(username).then((res) => {
-                console.log("res: ");
-                console.log(res.data);
                 dispatch(setValues(res.data));
             });
         }
