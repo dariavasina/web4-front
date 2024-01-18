@@ -18,6 +18,10 @@ class EntryService {
     clearAllEntries() {
         return axios.delete(ENTRY_API_BASE_URL);
     }
+
+    clearEntriesForUser(username) {
+        return axios.delete(ENTRY_API_BASE_URL, { data: username });
+    }
 }
 
 export default new EntryService()

@@ -46,25 +46,13 @@ export default function DataTable() {
                                         <td> { entry.x }</td>
                                         <td> { entry.y }</td>
                                         <td> { entry.r }</td>
-                                        <td> { entry.hit.toString() }</td>
-                                        <td> { entry.responseTime }</td>
+                                        <td> { entry.hit ? '✔️' : '❌'}</td>
+                                        <td> { entry.responseTime } ms</td>
 
                                     </tr>
                                 )
                             }
-                            {/* {
-                                entries.map(
-                                    entry =>
-                                    <tr key = {entry.id}>
-                                        <td> { entry.x }</td>
-                                        <td> { entry.y }</td>
-                                        <td> { entry.r }</td>
-                                        <td> { entry.hit.toString() }</td>
-                                        <td> { entry.responseTime }</td>
-
-                                    </tr>
-                                )
-                            } */}
+                            
                         </tbody>
 
                 </table>

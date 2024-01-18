@@ -8,10 +8,19 @@ export const entrySlice = createSlice({
   },
   reducers: {
     setValues: (state, action) => {
+      console.log("IN ENTRYSLICE");
+      console.log(action.payload);
       return {
         ...state, 
         valuesArray: action.payload,
       }
+    },
+    clearValues: (state, action) => {
+      console.log("in clear valuesarray");
+      return {
+        ...state,
+        valuesArray: [],
+      };
     },
     addValue: (state, action) => {
       console.log("in dispatch");
@@ -20,13 +29,10 @@ export const entrySlice = createSlice({
         valuesArray: [...state.valuesArray, action.payload],
       };
     },
-    clearValues: (state) => {
-      state.valuesArray = [];
-    },
   },
 });
 
-export const { addValue, clearValues, setValues } = entrySlice.actions;
+export const { addValue, clearValues, setValues} = entrySlice.actions;
 
 export const selectValuesArray = (state) => state.entry.valuesArray;
 

@@ -37,8 +37,7 @@ function App() {
 function HomePage() {
   return (
     <div>
-      <div className="container">
-        {/* <ChartComponent /> */}
+      <div>
         <CreateEntryForm />
       </div>
       <div className='table'>
@@ -47,39 +46,6 @@ function HomePage() {
     </div>
   );
 }
-
-
-
-
-
-  // const [entries, setEntries] = useState([]);
-
-  // useEffect(() => {
-  //   // Fetch entries data and update state
-  //   EntryService.getEntries()
-  //     .then((res) => {
-  //       setEntries(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching entries:', error);
-  //     });
-  // }, []);
-
-// function App() {
-//   return (
-//     <div>
-//       <HeaderComponent />
-//         <div className="container">
-//             <GraphComponent />
-//             <CreateEntryForm />
-//         </div>
-//         <div className='table'>
-//           <ListEntryComponent />
-//         </div>
-        
-//     </div>
-//   );
-// }
 
 
 export default App;

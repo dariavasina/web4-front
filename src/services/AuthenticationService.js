@@ -9,14 +9,24 @@ class AuthenticationService {
 
      logInUser(credentials) {
       return axios.post(`${AUTH_API_BASE_URL}/login`, credentials)
-          .then(response => {
-              if (response.status === 200) {
-                  localStorage.setItem('token', response.data);
-                  return response.data;
-              }
-              return response.data;
-          });
-   }
+            .then(response => {
+                localStorage.setItem('token', response.data);
+                return response.data;
+            })
+            .catch(error => {
+                if (error.response) {
+                    return Promise.reject(error.response.data);
+                }
+                else if (error.request) {
+                    return Promise.reject("No response received from the server");
+                }
+                else {
+                    console.error("An error occurred while setting up the request:", error.message);
+                    return Promise.reject("An error occurred while setting up the request");
+                }
+            });
+
+    }
 }
 
 export default new AuthenticationService()

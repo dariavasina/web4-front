@@ -17,6 +17,8 @@ const LoginPage = () => {
     password: '',
   });
 
+  const [error, setError] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({
@@ -24,46 +26,35 @@ const LoginPage = () => {
       [name]: value,
     });
   };
-
-  // const performLogin = async () => {
-  //   // Implement your authentication logic here.
-  //   // Example: Check credentials and perform login
-  //   // Replace this with your actual authentication mechanism
-  //   if (userData.username === 'example' && userData.password === 'password') {
-  //     // If login successful, redirect to home page
-  //     navigate('/home');
-  //   } else {
-  //     // Handle login failure
-  //     alert('Invalid username or password');
-  //   }
-  // };  
-
   
   const onSubmit = async (data) => {
-    AuthenticationService.logInUser(data).then(res => {
+    try {
+      const res = await AuthenticationService.logInUser(data);
+
+      console.log(res.data);
+
       console.log('just logged in user');
       const username = data.username;
       console.log(username);
       console.log(res)
-      // console.log(res.data)
-      // const token = res.data;
 
-      // console.log(token);
-      //dispatch(addToken(token));
       localStorage.setItem('username', username);
       navigate('/home');
-    })
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
   
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError(null)
     onSubmit(userData);
   };
 
   return (
     <div className='login-container'>
-      {/* <h2>Login</h2> */}
       <form onSubmit={handleSubmit}>
         <div> 
           <div className='input-group'>
@@ -77,6 +68,8 @@ const LoginPage = () => {
               required
             />
           </div>
+
+          {error && <div style={{ color: 'red' }}>{error}</div>}
         <div className='input-group'>
           <label htmlFor="password">Password:</label>
           <InputText

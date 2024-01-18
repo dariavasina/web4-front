@@ -85,13 +85,13 @@ const CreateEntryForm = () => {
     return (
         <div className='container'>
             <ChartComponent r={formData.r} />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='form'>
             <div className="entry-container">
                 <div className="input-group">
                     <label>
                     X Coordinate:         </label>
                     {['-4', '-3', '-2', '-1', '0', '1', '2', '3', '4'].map((value) => (
-                        <Button id="x" key={value} value={value} onClick={(e) => handleChange(e)} type="button"> 
+                        <Button id="x" key={value} value={value} className='change-values-button' onClick={(e) => handleChange(e)} type="button"> 
                         {value} 
                         </Button>
                     ))}
@@ -120,14 +120,12 @@ const CreateEntryForm = () => {
                     Radius: </label>
                     
                     {['-4', '-3', '-2', '-1', '0', '1', '2', '3', '4'].map((value) => (
-                        <Button id="r" key={value} value={value} onClick={(e) => handleChange(e)} type="button">
+                        <Button id="r" key={value} value={value} className='change-values-button' onClick={(e) => handleChange(e)} type="button">
                         {value}
                         </Button>
                         
                     ))}
                 </div>
-
-                {/* {!isValid && <p>Radius can't be negative!</p>} */}
 
                 
             </div>

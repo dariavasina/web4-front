@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { entrySelector } from '../slices/EntrySlice';
+import { entrySelector, selectValuesArray, setValues, clearValues} from '../slices/EntrySlice';
 import EntryService from '../services/EntryService';
 import { addValue } from '../slices/EntrySlice';
 import { Button } from 'primereact/button';
@@ -11,7 +11,7 @@ import "primeicons/primeicons.css"
 
 const ChartComponent = ({ r }) => {
   const canvasRef = useRef(null);
-  const R = 100; 
+  
   const dispatch = useDispatch();
   const username = localStorage.getItem('username');
 
@@ -20,8 +20,6 @@ const ChartComponent = ({ r }) => {
     y: '',
     r: '',
   });
-
-  console.log("changed r: ", r);
 
   const [stateEntries, setStateEntries] = useState([]);
 
@@ -41,6 +39,11 @@ const ChartComponent = ({ r }) => {
     let chartColor = "#87CEEB"
     let inChartColor = "#7188B1"
 
+    let R = 100;
+    if (r != 0) {
+      R = r * 25;
+    }
+
     canvas.addEventListener('click', handleClick);
 
     drawAllPoints(context, canvas);
@@ -49,13 +52,15 @@ const ChartComponent = ({ r }) => {
       xt = Number.parseFloat(xt);
       yt = Number.parseFloat(yt);
       let valid = validate(xt, yt, r);
-      // console.log("valid: ", valid);
       let color = '#2e2e2e';
       let colore = '#FF69B4';
       if(valid){
           colore = '#ffffff';
           color = '#FF69B4';
       }
+
+      console.log(x, y)
+      console.log(xt, yt);
 
       ctx.beginPath();
       ctx.arc(x, y, 3+1, 0, 2 * Math.PI);
@@ -70,15 +75,15 @@ const ChartComponent = ({ r }) => {
       ctx.font = '12px Arial';
       ctx.fillStyle = '#000000';
       ctx.fillText('('+xt+'; '+yt+')', x + 10, y);
-  }
-
-  function validate(x, y, r){
-    if(r===0){
-        return false;
     }
-    return (x <= 0 && y <= 0 && x * x + y * y <= r * r) || (x <= 0 && y >= 0 && x >= -r && y <= r)||(x >= 0 && y >= 0 && y <= (-2) * x + r);
 
-  }
+    function validate(x, y, r){
+      if(r===0){
+          return false;
+      }
+      return (x <= 0 && y <= 0 && x * x + y * y <= r * r) || (x <= 0 && y >= 0 && x >= -r && y <= r)||(x >= 0 && y >= 0 && y <= (-2) * x + r);
+
+    }
     function drawAllPoints(context, canvas) {
       console.log("draw entries");
       EntryService.getEntriesByUsername(username).then((res) => {
@@ -118,7 +123,7 @@ const ChartComponent = ({ r }) => {
     
 
 
-  function drawChart(context, width, height, R, color) {
+    function drawChart(context, width, height, R, color) {
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = color
   
@@ -145,7 +150,7 @@ const ChartComponent = ({ r }) => {
       context.fillText('X', width - 10, height / 2 - 10);
       context.fillText('Y', width / 2 + 10, 10);
   
-  }
+    }
     
     context.lineWidth = 2;
 
@@ -241,20 +246,36 @@ const ChartComponent = ({ r }) => {
       dispatch(addValue(res.data));
   });
 
+  
+
+  }
+
+  const clear = async (event) => {
+    console.log("clear");
+    EntryService.clearEntriesForUser(username)
+    .then(response => {
+        console.log("Entries cleared successfully:", response);
+        dispatch(clearValues());
+        console.log("valuesArray:", valuesArray);
+
+    })
+    .catch(error => {
+        console.error("Error clearing entries:", error);
+    });
   }
 
   return (
-    <div>
+  <div>
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <canvas
-      ref={canvasRef}
-      width={500}
-      height={500}
-      style={{ border: '1px solid black' }}
-    ></canvas>
-
-    {/* <Button type="button" onClick={clear}> Clear</Button> */}
+        ref={canvasRef}
+        width={500}
+        height={500}
+        style={{ border: '1px solid black' }}
+      ></canvas>
+      <Button type="button" onClick={clear} className='clear-button'> Clear</Button>
     </div>
-    
+  </div>
   );
 
 };

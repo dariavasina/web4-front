@@ -1,13 +1,59 @@
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.clear-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px; /* Adjust as needed */
+}
+
+.entry-container {
+  display: flex;
+  padding: 30px;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.table {
+  padding: 50px;
+  margin: 0 auto;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+  padding: 20px;
+}
+
+.choose-page {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.input-group label {
+  width: 100%;
+  display: block; 
+  margin-bottom: 20px; 
+}
+
+
 /* Desktop View */
 /* Devices with a width of 1263px and above */
 @media (min-width: 1263px) {
-  header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
-  }
-  
   .container {
     padding: 10px;
     display: flex;
@@ -17,119 +63,36 @@
     padding: 10px 10px;
   }
   
-  .entry-container {
-    display: flex;
-    padding: 30px;
-    flex-direction: column;
-  }
-  
-  .input-group {
-    margin-bottom: 20px;
-  }
-  
-  .table {
-    padding: 50px;
-    margin: 0 auto;
-    width: 80%;
-    box-sizing: border-box;
-  }
-  
-  .input-group label {
-    width: 100%;
-    display: block; 
-    margin-bottom: 20px; 
-  }
-  
   button[type="submit"] {
     margin-left: 200px;
   }
 
-  .login-container {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    padding: 20px;
-  }
-
-  .choose-page {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
+  
 }
 
 @media (min-width: 704px) and (max-width: 1262px) {
-  header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
-  }
-  
   .container {
     padding: 10px;
     display: flex;
-    flex-direction: column;
   }
-  
-  canvas {
-    width: 100%;
-    padding: 10px 10px;
-    display: block;
-  }
-  
-  .entry-container {
-    display: flex;
-    padding: 30px;
-    flex-direction: column;
-  }
-  
-  .input-group {
-    margin-bottom: 20px;
-  }
-  
-  .table {
-    padding: 50px;
-    margin: 0 auto;
-    width: 80%;
-    box-sizing: border-box;
-  }
-  
+
   .input-group label {
-    width: 100%;
-    display: block; 
-    margin-bottom: 20px; 
+    margin-bottom: 5px; 
+  }
+
+  .change-values-button {
+    width: 10%;
+    /* height: 50%; */
+  }
+
+  button[type="submit"] {
+    margin-left: 50px;
+    justify-content: center;
   }
   
-  button[type="submit"] {
-    margin-left: 200px;
-  }
-
-  .login-container {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    padding: 20px;
-  }
-
-  .choose-page {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-
 }
 
 @media (max-width: 704px) {
-  header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
-  }
-
   .container {
     padding: 10px;
     display: flex;
@@ -142,45 +105,29 @@
     display: block;
   }
   
-  .entry-container {
+  button[type="submit"] {
+    margin-left: 170px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 704px) {
+  .container {
+    padding: 10px;
     display: flex;
-    padding: 30px;
     flex-direction: column;
   }
-  
-  .input-group {
-    margin-bottom: 20px;
-  }
-  
-  .table {
-    padding: 50px;
-    margin: 0 auto;
-    width: 80%;
-    box-sizing: border-box;
-  }
-  
-  .input-group label {
+  canvas {
     width: 100%;
-    display: block; 
-    margin-bottom: 20px; 
+    padding: 10px 10px;
+    display: block;
   }
-  
+
+  .change-values-button {
+    width: 10%;
+  } 
+
   button[type="submit"] {
     margin-left: 200px;
-  }
-
-  .login-container {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    padding: 20px;
-  }
-
-  .choose-page {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
   }
 }
 
